@@ -125,7 +125,7 @@ module IrcCat
     def login
       begin
         sendln "NICK #{@nick}"
-        sendln "USER irc_cat . . :#{@realname}"
+        sendln "USER #{@nick} . . :#{@realname}"
         if @nick_pass
           puts "logging in to NickServ"
           sendln "PRIVMSG NICKSERV :identify #{@nick_pass}"
