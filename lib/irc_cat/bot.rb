@@ -60,8 +60,9 @@ module IrcCat
     end
 
     # Announces states
-    def announce(msg)
-      @channels.each do |channel,key|
+    def announce(msg, channels = nil)
+      channels = @channels unless channels
+      channels.each do |channel,key|
         say(channel, msg)
       end
     end
