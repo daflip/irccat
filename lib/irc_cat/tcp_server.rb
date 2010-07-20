@@ -18,7 +18,7 @@ module IrcCat
           Thread.start(socket.accept) do |s|
             channels = @channels
             str = s.recv(@config['size'])
-            if str.match /^(#[^\W]+)\s(.+)/
+            if str.match /^(#[^\W]+)\s(.+)/m
               str = $2
               channels = $1.split(',').collect {|channel| [channel,]}
             end
