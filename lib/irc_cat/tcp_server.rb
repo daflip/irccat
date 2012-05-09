@@ -11,8 +11,8 @@ module IrcCat
 
     def run
       Thread.new do
-        socket = TCPserver.new(ip, port)
         puts "Starting TCP (#{ip}:#{port})"
+        socket = TCPServer.new(ip, port)
 
         loop do
           Thread.start(socket.accept) do |s|
