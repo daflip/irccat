@@ -108,10 +108,11 @@ module IrcCat
     def handle(line)
       puts "Got: #{line}"
       case line
-      when /^:.+\s376/
+      when /^:.+\s(250|376)/
         puts "We're online"
+        return if @online
         @online = true
-        @connect_block.call(self) if @connect_block
+        @connect_block.call(self) if @connect_block 
       when /^:.+KICK (#[^\s]+)/
         auto_rejoin($1)
       end
