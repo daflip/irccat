@@ -23,7 +23,18 @@ module IrcCat
     end
 
     def run(&block)
-      @socket = TCPSocket.open(@host, @port)
+      # if SSL port then use SSL instead 
+      if @port.to_i == 6697
+        raise "unable to require 'openssl'" unless require "openssl"
+        puts "Initialized SSL/TLS connection "
+        unencrypted_socket = TCPSocket.new(@host, @port)
+        ssl_context = OpenSSL::SSL::SSLContext.new()
+        @socket = OpenSSL::SSL::SSLSocket.new(unencrypted_socket, ssl_context)
+        @socket.sync_close = true
+        @socket.connect
+      else
+        @socket = TCPSocket.open(@host, @port)
+      end
       login
 
       trap(:INT) {
